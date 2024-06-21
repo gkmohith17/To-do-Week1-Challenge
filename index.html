@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column; /* Start with a column layout */
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+    }
+
+    .left, .right {
+      padding: 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .left {
+      width: 300px;
+      height: 540px;
+      background-color: #36DBE5;
+      color: white;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .right {
+      width: 100%;
+      max-width: 650px;
+      background-color: #249EE3;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      color: black;
+    }
+
+    .date-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .date {
+      font-size: 4em;
+    }
+
+    .month-year {
+      display: flex;
+      flex-direction: column;
+      margin-left: 10px;
+    }
+
+    .month {
+      font-size: 1.5em;
+    }
+
+    .year {
+      font-size: 1em;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #000;
+      right: auto;
+    }
+
+    .calendar-container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .nav-buttons .title {
+      flex-grow: 1;
+      text-align: left;
+    }
+
+    .nav-button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: black;
+    }
+
+    .nav-button:hover {
+      background-color: #ddd;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 2px;
+      margin: 0 auto;
+      flex-grow: 1;
+    }
+
+    .day {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2em;
+      text-align: center;
+      color: black;
+      border: solid rgb(217, 217, 217) 1px;
+      cursor: pointer;
+    }
+
+    .day.other-month {
+      background-color: #d3d3d3;
+      color: grey;
+    }
+
+    .day.today {
+      background-color: #00bfff;
+      color: white;
+    }
+
+    .day.upcoming {
+      background-color: #ff9900;
+      color: white;
+    }
+
+    .day.weekend {
+      background-color: #f5f5f5;
+    }
+
+    .deadline {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.5);
+      color: #000;
+    }
+
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .weekdays div {
+      color: black;
+    }
+
+    .task-container {
+      margin-top: 20px;
+    }
+
+    .task-input {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    .task-input input {
+      flex-grow: 1;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .task-input button {
+      padding: 10px;
+      margin-left: 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #1e90ff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .task-input button:hover {
+      background-color: #1c86ee;
+    }
+
+    .july-title{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+
+    }
+
+    @media (min-width: 600px) {
+      .container {
+        flex-direction: row; /* Switch to row layout on larger screens */
+      }
+
+      .right {
+        width: 650px;
+      }
+    }
+
+    @media (max-width: 599px) {
+      .day {
+        width: 50px;
+        height: 50px;
+      }
+
+      .calendar {
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      .date {
+        font-size: 2em;
+      }
+
+      .month {
+        font-size: 1em;
+      }
+
+      .year {
+        font-size: 0.8em;
+      }
+
+      .left, .right {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        flex-direction: column; /* Ensure the columns stack on smaller screens */
+      }
+      
+      .day {
+        width: 40px;
+        height: 40px;
+      }
+
+      .nav-button {
+        width: 20px;
+        height: 20px;
+        font-size: 1em;
+      }
+
+      .calendar-container {
+        padding: 10px;
+      }
+
+      .title {
+        font-size: 1em;
+        color: black;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="date-container">
+        <div class="date" id="selected-date">02</div>
+        <div class="month-year">
+          <div class="month" id="selected-month">July</div>
+          <div class="year" id="selected-year">2021</div>
+        </div>
+      </div>
+      
+      <div>
+        <div class="title">TODAY'S DEADLINES</div>
+        <div class="deadline">Complete frontend challenge</div>
+        <div class="deadline">Complete UI/UX challenge</div>
+        <div class="title">UPCOMING DEADLINES</div>
+        <div class="deadline">Do something</div>
+        <div class="deadline">Finish personal project</div>
+        <div class="task-container">
+          <div class="title">TASKS</div>
+          <div class="task-input">
+            <input type="text" id="task-input" placeholder="Add a task">
+            <button id="add-task-button">Add</button>
+          </div>
+          <ul id="task-list"></ul>
+        </div>
+        
+      </div>
+    </div>
+    <div class="right">
+      <div class="calendar-container">
+        <div class="nav-buttons">
+          <div class="title july-title" id="calendar-title">June 2024</div>
+          <div class="nav-button" id="prev-month">&lt;</div>
+          <div class="nav-button" id="next-month">&gt;</div>
+        </div>
+        <div class="weekdays">
+          <div>Mo</div>
+          <div>Tu</div>
+          <div>We</div>
+          <div>Th</div>
+          <div>Fr</div>
+          <div>Sa</div>
+          <div>Su</div>
+        </div>
+        <div class="calendar" id="calendar">
+          <!-- Calendar days will be injected here by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentMonth = 5; // June is month 5 in JavaScript Date (0-indexed)
+    let currentYear = 2024;
+    let selectedDay = null;
+  
+    let tasks = {}; // Store tasks for each date
+  
+    const daysContainer = document.getElementById('calendar');
+    const calendarTitle = document.getElementById('calendar-title');
+    const navButtons = document.querySelectorAll('.nav-button');
+    const taskInput = document.getElementById('task-input');
+    const taskList = document.getElementById('task-list');
+    const selectedDateElement = document.getElementById('selected-date');
+    const selectedMonthElement = document.getElementById('selected-month');
+    const selectedYearElement = document.getElementById('selected-year');
+    const addTaskButton = document.getElementById('add-task-button');
+  
+    navButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.id === 'prev-month') {
+          currentMonth--;
+          if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+          }
+        } else {
+          currentMonth++;
+          if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+          }
+        }
+        updateCalendar();
+      });
+    });
+  
+    addTaskButton.addEventListener('click', addTask);
+  
+    function updateCalendar() {
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+  
+      calendarTitle.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+      daysContainer.innerHTML = '';
+  
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const previousMonthLastDate = new Date(currentYear, currentMonth, 0).getDate();
+  
+      // Previous month's days
+      for (let i = firstDay === 0 ? 6 : firstDay - 1; i > 0; i--) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'day other-month';
+        dayElement.textContent = previousMonthLastDate - i + 1;
+        daysContainer.appendChild(dayElement);
+      }
+  
+      // Current month's days
+      for (let i = 1; i <= lastDate; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'day';
+        dayElement.textContent = i;
+        if (i === 16 && currentMonth === 5 && currentYear === 2024) {
+          dayElement.classList.add('today');
+        }
+        // Mark upcoming deadlines
+        if (i >= 17 && i <= 20 && currentMonth === 5 && currentYear === 2024) {
+          dayElement.classList.add('upcoming');
+        }
+        dayElement.addEventListener('click', () => {
+          if (selectedDay) {
+            selectedDay.classList.remove('special');
+          }
+          dayElement.classList.add('special');
+          selectedDay = dayElement;
+          updateSelectedDate(i, monthNames[currentMonth], currentYear);
+          displayTasksForDate(i);
+        });
+        daysContainer.appendChild(dayElement);
+      }
+  
+      // Next month's days
+      const nextDays = 7 - (daysContainer.childElementCount % 7);
+      for (let i = 1; i <= nextDays && nextDays < 7; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = 'day other-month';
+        dayElement.textContent = i;
+        daysContainer.appendChild(dayElement);
+      }
+    }
+  
+    function updateSelectedDate(day, month, year) {
+      selectedDateElement.textContent = String(day).padStart(2, '0');
+      selectedMonthElement.textContent = month;
+      selectedYearElement.textContent = year;
+    }
+  
+    function addTask() {
+      console.log('Adding task...');
+      const task = taskInput.value.trim();
+      if (!task || !selectedDay) return;
+  
+      const dateKey = `${currentYear}-${currentMonth + 1}-${selectedDay.textContent}`;
+      if (!tasks[dateKey]) {
+        tasks[dateKey] = [];
+      }
+      tasks[dateKey].push(task);
+      taskInput.value = '';
+      displayTasksForDate(selectedDay.textContent);
+    }
+  
+    function displayTasksForDate(day) {
+      const dateKey = `${currentYear}-${currentMonth + 1}-${day}`;
+      taskList.innerHTML = '';
+  
+      if (tasks[dateKey]) {
+        tasks[dateKey].forEach(task => {
+          const taskItem = document.createElement('li');
+          taskItem.textContent = task;
+          taskList.appendChild(taskItem);
+        });
+      }
+    }
+  
+    updateCalendar();
+  </script>
+  
+</body>
+</html>
