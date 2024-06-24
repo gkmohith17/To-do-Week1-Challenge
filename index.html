@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,7 +17,7 @@
 
     .container {
       display: flex;
-      flex-direction: column; /* Start with a column layout */
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 0;
@@ -31,7 +33,6 @@
 
     .left {
       width: 300px;
-      height: 540px;
       background-color: #36DBE5;
       color: white;
       border-top-right-radius: 0;
@@ -209,16 +210,19 @@
       background-color: #1c86ee;
     }
 
-    .july-title{
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 900;
-
+    .july-title {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 900;
     }
 
-    @media (min-width: 600px) {
+    @media screen and (min-width: 600px) {
       .container {
-        flex-direction: row; /* Switch to row layout on larger screens */
+        flex-direction: row;
+      }
+
+      .left {
+        height: 540px;
       }
 
       .right {
@@ -226,7 +230,16 @@
       }
     }
 
-    @media (max-width: 599px) {
+    @media screen and (max-width: 599px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left, .right {
+        width: 100%;
+        padding: 10px;
+      }
+
       .day {
         width: 50px;
         height: 50px;
@@ -247,17 +260,17 @@
       .year {
         font-size: 0.8em;
       }
-
-      .left, .right {
-        padding: 10px;
-      }
     }
 
-    @media (max-width: 400px) {
+    @media screen and (max-width: 400px) {
       .container {
-        flex-direction: column; /* Ensure the columns stack on smaller screens */
+        flex-direction: column;
       }
-      
+
+      .left, .right {
+        width: 100%;
+      }
+
       .day {
         width: 40px;
         height: 40px;
@@ -306,7 +319,6 @@
           </div>
           <ul id="task-list"></ul>
         </div>
-        
       </div>
     </div>
     <div class="right">
@@ -326,12 +338,11 @@
           <div>Su</div>
         </div>
         <div class="calendar" id="calendar">
-          <!-- Calendar days will be injected here by JavaScript -->
+          <!-- Days will be populated by JavaScript -->
         </div>
       </div>
     </div>
   </div>
-
   <script>
     let currentMonth = 5; // June is month 5 in JavaScript Date (0-indexed)
     let currentYear = 2024;
@@ -460,6 +471,5 @@
   
     updateCalendar();
   </script>
-  
 </body>
 </html>
